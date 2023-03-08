@@ -1,9 +1,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from db.models import stock_data
+from db.models import StockData
 
 def connect():
-    engine = create_engine('postgresql://your_username:your_password@localhost/your_database_name')
+    engine = create_engine('mysql://admin:thndr@localhost:3306/stocks')
     Session = sessionmaker(bind=engine)
     session = Session()
     return session
