@@ -1,6 +1,18 @@
 version: '3.5'
 
 services:
+    db:
+        image: mysql:5.7
+        restart: always
+        environment:
+            MYSQL_DATABASE: 'stocks'
+            MYSQL_USER: 'admin'
+            MYSQL_PASSWORD: 'thndr'
+            MYSQL_ROOT_PASSWORD: 'thndr'
+        ports:
+            - '3306:3306'
+        expose:
+            - '3306'
 
     vernemq:
         environment:
@@ -8,6 +20,10 @@ services:
             - DOCKER_VERNEMQ_ALLOW_ANONYMOUS=on
             - MQTT_TOPIC=thndr-trading
         image: erlio/docker-vernemq
+        ports:
+            - '1883:1883'
+        expose:
+            - '1883'
 
     streamer:
         environment:
