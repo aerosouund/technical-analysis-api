@@ -1,10 +1,12 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from db.models import stock_data
 
 def connect():
     engine = create_engine('postgresql://your_username:your_password@localhost/your_database_name')
     Session = sessionmaker(bind=engine)
     session = Session()
+    return session
 
 
 def commit_message(message):
