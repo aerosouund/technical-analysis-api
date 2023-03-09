@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker
 from db.models import StockData
 
 def connect():
-    engine = create_engine('mysql://admin:thndr@localhost:3306/stocks')
+    engine = create_engine('mysql://admin:thndr@127.0.0.1:3306/stocks')
     Session = sessionmaker(bind=engine)
     session = Session()
     return session
@@ -11,6 +11,7 @@ def connect():
 
 def commit_message(message):
     # parse the incoming JSON message
+    session = connect()
     stock_id = message['stock_id']
     name = message['name']
     price = message['price']
