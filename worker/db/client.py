@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from db.models import StockData
+import logging
 
 def connect():
     engine = create_engine('mysql://admin:thndr@127.0.0.1:3306/stocks')
