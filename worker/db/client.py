@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from db.models import StockData
+from db.models import Stock, get_stock_model
 import logging
 
 def connect():
@@ -21,7 +21,7 @@ def commit_message(message):
 
 
     # create a StockData object and insert it into the database
-    stock_data = StockData(stock_id=stock_id, name=name, price=price, availability=availability, timestamp=timestamp)
+    stock_data = get_stock_model(name)(stock_id=stock_id, name=name, price=price, availability=availability, timestamp=timestamp)
     session.add(stock_data)
     session.commit()
 
