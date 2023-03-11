@@ -6,9 +6,9 @@ from sqlalchemy import BigInteger, Column, Date, DateTime, ForeignKey, Integer, 
 
 
 class Stock(db.Model):
-   __abstract__ = True
+    __abstract__ = True
 
-    id = Column(String, primary_key=True)
+    stock_id = Column(String, primary_key=True)
     name = Column(String, nullable=False)
     price = Column(Integer, nullable=False)
     availability = Column(Integer, nullable=False)
