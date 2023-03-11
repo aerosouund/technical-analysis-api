@@ -7,7 +7,6 @@ from app.stocks_api.services import StockService
 from flask import request, g
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
-from typing import Optional, List
 
 DATE_FORMAT = "%Y-%m-%d"
 
@@ -16,9 +15,9 @@ api = Namespace("Stocks", description="Technical analysis for stocks")
 
 @api.route("/stocks")
 class StockResource(Resource):
-    @responds(schema=StockSchema, many=True)
-    def get(self) -> List[Stock]:
-        stocks: List[Stock] = StockService.retrieve_all()
+    def get(self):
+        stocks=StockService.retrieve_all()
+        stocks=[stock.pop('timestamp', None) for stock in stocks]
         return stocks
 
 
