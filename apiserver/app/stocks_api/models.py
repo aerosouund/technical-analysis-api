@@ -18,7 +18,8 @@ class Stock(db.Model):
 def get_stock_model(ticker):
     tablename = 'stock_%s' % ticker  # dynamic table name
     class_name = 'Stock%s' % ticker  # dynamic class name
-    Model = type(class_name, (Log,), {
-        '__tablename__': tablename
+    Model = type(class_name, (Stock,), {
+        '__tablename__': tablename,
+        '__table_args__': {'extend_existing': True}
     })
     return Model
