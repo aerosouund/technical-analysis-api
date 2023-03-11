@@ -4,8 +4,8 @@ from typing import Dict, List
 
 from app import db
 from app.stocks_api.models import get_stock_model
-from app.stocks_api.schemas import StockSchema
 from sqlalchemy.sql.expression import func
+from sqlalchemy import desc
 
 
 logging.basicConfig(level=logging.WARNING)
@@ -14,9 +14,10 @@ logger = logging.getLogger("stocks-api")
 
 class StockService:
     @staticmethod
-    def retrieve(stock_id):
-        stock = session.query(func.max(get_stock_model(stock_id).creation_time)).filter
-        return stock
+    def retrieve(stock_name):
+        stock = db.session.query(get_stock_model(stock_name)).order_by(
+        desc(get_stock_model(stock_name).timestamp)).limit(1).one()
+        return stock._asdict()
 
     # @staticmethod
     # def retrieve_all() -> List[Stock]:

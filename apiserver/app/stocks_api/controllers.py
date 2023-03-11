@@ -1,5 +1,6 @@
 from datetime import datetime
-
+from flask import jsonify
+import json
 from app.stocks_api.models import Stock
 from app.stocks_api.schemas import StockSchema
 from app.stocks_api.services import StockService
@@ -21,10 +22,12 @@ class StockResource(Resource):
         return stocks
 
 
-@api.route("/stocks/<stock_id>")
-@api.param("person_id", "Unique ID for a given stock", _in="query")
+@api.route("/stocks/<stock_name>", methods=['GET'])
+@api.param("stock_name", "Unique ID for a given stock")
 class StockResource(Resource):
-    @responds(schema=StockSchema)
-    def get(self, stock_id) -> Stock:
-        stock: Stock = StockService.retrieve(stock_id)
+    def get(self, stock_name):
+        stock=StockService.retrieve(stock_name)
+        if stock is None:
+            return {"message": "Stock not found"}, 404
+        stock.pop('timestamp', None)
         return stock

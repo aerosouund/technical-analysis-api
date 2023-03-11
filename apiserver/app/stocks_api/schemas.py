@@ -6,6 +6,11 @@ class StockSchema(Schema):
     name = fields.String()
     price = fields.String()
     availability = fields.String()
+    timestamp = fields.String()
 
     class Meta:
         model = Stock
+
+class StockSchemaExcludeTimestamp(StockSchema):
+    class Meta:
+        exclude = ('timestamp',)
