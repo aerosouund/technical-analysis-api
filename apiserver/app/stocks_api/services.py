@@ -1,10 +1,10 @@
 import logging
 from datetime import datetime, timedelta
-from typing import Dict, List
+from sqlalchemy import inspect
+from sqlalchemy import exc
 
 from app import db
 from app.stocks_api.models import get_stock_model
-from sqlalchemy.sql.expression import func
 from sqlalchemy import desc
 
 
@@ -15,10 +15,21 @@ logger = logging.getLogger("stocks-api")
 class StockService:
     @staticmethod
     def retrieve(stock_name):
-        stock = db.session.query(get_stock_model(stock_name)).order_by(
-        desc(get_stock_model(stock_name).timestamp)).limit(1).one()
+        try:
+            stock = db.session.query(get_stock_model(stock_name)).order_by(
+            desc(get_stock_model(stock_name).timestamp)).limit(1).one()
+        except exc.SQLAlchemyError:
+            return None
         return stock._asdict()
 
-    # @staticmethod
-    # def retrieve_all() -> List[Stock]:
-    #     return db.session.query(Stock).all()
+    @staticmethod
+    def retrieve_all():
+        insp = inspect(db.engine)
+        tables = insp.get_table_names()
+        stocks = []
+        for table in tables:
+            stock = db.session.query(get_stock_model(table.replace('stock_', ''))).order_by(
+            desc(get_stock_model(table.replace('stock_', '')).timestamp)).limit(1).one()
+            stocks.append(stock._asdict())
+        return stocks
+        
