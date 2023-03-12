@@ -16,8 +16,9 @@ class StockService:
     @staticmethod
     def retrieve(stock_name):
         try:
-            stock = db.session.query(get_stock_model(stock_name)).order_by(
-            desc(get_stock_model(stock_name).timestamp)).limit(1).one()
+            model = get_stock_model(stock_name)
+            stock = db.session.query(model).order_by(
+            desc(model.timestamp)).limit(1).one()
         except exc.SQLAlchemyError:
             return None
         return stock._asdict()
@@ -28,8 +29,9 @@ class StockService:
         tables = insp.get_table_names()
         stocks = []
         for table in tables:
-            stock = db.session.query(get_stock_model(table.replace('stock_', ''))).order_by(
-            desc(get_stock_model(table.replace('stock_', '')).timestamp)).limit(1).one()
+            model = get_stock_model(table.replace('stock_', ''))
+            stock = db.session.query(model).order_by(
+            desc(model.timestamp)).limit(1).one()
             stocks.append(stock._asdict())
         return stocks
         
