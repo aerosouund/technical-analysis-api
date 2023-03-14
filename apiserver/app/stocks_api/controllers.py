@@ -5,7 +5,7 @@ from flask import request
 from app.stocks_api.services import StockService, AnalysisService
 from flask_restx import Namespace, Resource
 
-# DATE_FORMAT = "%Y-%m-%d"
+
 
 api = Namespace("Stocks", description="Technical analysis for stocks")
 
