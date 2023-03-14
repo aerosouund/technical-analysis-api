@@ -19,10 +19,6 @@ def create_app(env=None):
     db.init_app(app)
 
 
-    @app.before_request
-    def before_request():
-        pass
-
     @app.route("/health")
     def health():
         return jsonify("healthy")
