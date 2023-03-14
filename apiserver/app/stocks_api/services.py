@@ -15,7 +15,10 @@ logger = logging.getLogger("stocks-api")
 class StockService:
     @staticmethod
     def retrieve(stock_name):
+        '''Retrieve a specific stock'''
+
         try:
+            # get the stock with the max value in timestamp
             model = get_stock_model(stock_name)
             stock = db.session.query(model).order_by(
             desc(model.timestamp)).limit(1).one()
@@ -25,6 +28,9 @@ class StockService:
 
     @staticmethod
     def retrieve_all():
+        '''Retrieve all stocks'''
+
+        # check all tables in the database and get the max timestamp stock in it
         insp = inspect(db.engine)
         tables = insp.get_table_names()
         stocks = []
@@ -39,11 +45,12 @@ class StockService:
 class AnalysisService:
     @staticmethod
     def post_analysis(stock_name, analysis):
+        '''Post analysis to Redis'''
         redis.mset({stock_name: analysis})
-
 
     @staticmethod
     def get_analysis(stock_name):
+        '''Get analysis from Redis'''
         analysis = redis.get(stock_name)
         return analysis
         
