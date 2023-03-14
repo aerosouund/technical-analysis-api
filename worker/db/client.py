@@ -39,7 +39,7 @@ def commit_message(message):
     timestamp = message['timestamp']
 
 
-    # create a StockData object and insert it into the database
+    # create a StockName object and insert it into the database
     create_stock_table(name)
     stock_data = get_stock_model(name.replace(' ', '_'))(stock_id=stock_id, name=name, price=price, availability=availability, timestamp=timestamp)
     session.add(stock_data)

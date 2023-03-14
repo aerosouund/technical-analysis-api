@@ -1,6 +1,6 @@
 from __future__ import annotations
 from datetime import datetime
-from app import db  # noqa
+from app import db
 from sqlalchemy import BigInteger, Column, Date, DateTime, ForeignKey, Integer, String, inspect
 
 
@@ -8,7 +8,7 @@ from sqlalchemy import BigInteger, Column, Date, DateTime, ForeignKey, Integer, 
 class Stock(db.Model):
     ''' An abstract class that functions as a template
     for a table mapping for each stock '''
-    
+
     __abstract__ = True
 
     stock_id = Column(String, primary_key=True)
