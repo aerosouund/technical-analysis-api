@@ -1,6 +1,7 @@
 from datetime import datetime
 from app.stocks_api.models import Stock
-from app.stocks_api.services import StockService
+from flask import request
+from app.stocks_api.services import StockService, AnalysisService
 from flask_restx import Namespace, Resource
 
 DATE_FORMAT = "%Y-%m-%d"
@@ -25,3 +26,19 @@ class StockResource(Resource):
             return {"message": "Stock not found"}, 404
         stock.pop('timestamp', None)
         return stock
+
+
+@api.route("/admin/stocks/<stock_name>/analysis", methods=['POST'])
+@api.param("stock_name", "Unique ID for a given stock")
+class AnalysisResource(Resource):
+    def post(self, stock_name):
+        stock=StockService.retrieve(stock_name)
+        if stock is None:
+            return {"message": "Stock not found"}, 404
+
+        analysis = request.json
+        analysis['target_hit'] = analysis.target >= stock.price and analysis.type == "UP" |
+        analysis.target < stock.price and analysis.type == "DOWN"
+
+        AnalysisService.add(stock_name, analysis)
+        return analysis

@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from sqlalchemy import inspect
 from sqlalchemy import exc
 
-from app import db
+from app import db, redis
 from app.stocks_api.models import get_stock_model
 from sqlalchemy import desc
 
@@ -38,10 +38,12 @@ class StockService:
 
 class AnalysisService:
     @staticmethod
-    def post_analysis(analysis):
-        pass
+    def post_analysis(stock_name, analysis):
+        redis.mset({stock_name: analysis})
+
 
     @staticmethod
     def get_analysis(stock_name):
-        pass
+        analysis = redis.get(stock_name)
+        return analysis
         
