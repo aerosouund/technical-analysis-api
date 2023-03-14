@@ -4,6 +4,9 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
 class Stock(Base):
+    ''' An abstract class that functions as a template
+    for a table mapping for each stock '''
+
     __abstract__ = True
 
     stock_id = Column(String)
@@ -14,6 +17,8 @@ class Stock(Base):
 
 
 def get_stock_model(name):
+    ''' Create a table mapping class for a given stock '''
+    
     tablename = 'stock_%s' % name  # dynamic table name
     class_name = 'Stock%s' % name  # dynamic class name
     Model = type(class_name, (Stock,), {

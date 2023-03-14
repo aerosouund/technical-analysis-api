@@ -1,7 +1,7 @@
 from __future__ import annotations
 from datetime import datetime
 from app import db
-from sqlalchemy import BigInteger, Column, Date, DateTime, ForeignKey, Integer, String, inspect
+from sqlalchemy import Column, Date, DateTime, ForeignKey, Integer, String, inspect
 
 
 
