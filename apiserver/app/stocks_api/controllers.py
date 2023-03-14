@@ -1,5 +1,6 @@
 from datetime import datetime
 from app.stocks_api.models import Stock
+import json
 from flask import request
 from app.stocks_api.services import StockService, AnalysisService
 from flask_restx import Namespace, Resource
@@ -24,6 +25,9 @@ class StockResource(Resource):
         stock=StockService.retrieve(stock_name)
         if stock is None:
             return {"message": "Stock not found"}, 404
+
+        technical_analysis = json.loads(AnalysisService.get_analysis(stock_name).decode('UTF-8'))
+        stock['technical_analysis'] = technical_analysis
         stock.pop('timestamp', None)
         return stock
 
@@ -37,8 +41,7 @@ class AnalysisResource(Resource):
             return {"message": "Stock not found"}, 404
 
         analysis = request.json
-        analysis['target_hit'] = analysis.target >= stock.price and analysis.type == "UP" |
-        analysis.target < stock.price and analysis.type == "DOWN"
+        analysis['target_hit'] = analysis["target"] >= stock["price"] and analysis["type"] == "UP" or analysis["target"] < stock["price"] and analysis["type"] == "DOWN"
 
-        AnalysisService.add(stock_name, analysis)
+        AnalysisService.post_analysis(stock_name, json.dumps(analysis))
         return analysis
