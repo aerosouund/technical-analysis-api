@@ -1,10 +1,7 @@
-from datetime import datetime
-from app.stocks_api.models import Stock
 import json
 from flask import request
 from app.stocks_api.services import StockService, AnalysisService
 from flask_restx import Namespace, Resource
-
 
 
 api = Namespace("Stocks", description="Technical analysis for stocks")
