@@ -5,7 +5,7 @@ from flask import request
 from app.stocks_api.services import StockService, AnalysisService
 from flask_restx import Namespace, Resource
 
-DATE_FORMAT = "%Y-%m-%d"
+# DATE_FORMAT = "%Y-%m-%d"
 
 api = Namespace("Stocks", description="Technical analysis for stocks")
 
@@ -14,7 +14,7 @@ api = Namespace("Stocks", description="Technical analysis for stocks")
 class StockResource(Resource):
     def get(self):
         stocks=StockService.retrieve_all()
-        stocks=[{key : val for key, val in stock.items() if key != 'timestamp'} for stock in stocks]
+        stocks=[{key : val for key, val in stock.items() if key != 'timestamp'} for stock in stocks]  # remove the timestamp key
         return stocks
 
 
@@ -26,8 +26,9 @@ class StockResource(Resource):
         if stock is None:
             return {"message": "Stock not found"}, 404
 
+        # retrieve technical analysis from Redis and turn it into JSON
         technical_analysis = json.loads(AnalysisService.get_analysis(stock_name).decode('UTF-8'))
-        stock['technical_analysis'] = technical_analysis
+        stock['technical_analysis'] = technical_analysis  # remove the timestamp key
         stock.pop('timestamp', None)
         return stock
 
@@ -41,6 +42,7 @@ class AnalysisResource(Resource):
             return {"message": "Stock not found"}, 404
 
         analysis = request.json
+        # Compute target hit with a comparison with the current price
         analysis['target_hit'] = analysis["target"] >= stock["price"] and analysis["type"] == "UP" or analysis["target"] < stock["price"] and analysis["type"] == "DOWN"
 
         AnalysisService.post_analysis(stock_name, json.dumps(analysis))
