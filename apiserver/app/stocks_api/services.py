@@ -34,4 +34,14 @@ class StockService:
             desc(model.timestamp)).limit(1).one()
             stocks.append(stock._asdict())
         return stocks
+
+
+class AnalysisService:
+    @staticmethod
+    def post_analysis(analysis):
+        pass
+
+    @staticmethod
+    def get_analysis(stock_name):
+        pass
         

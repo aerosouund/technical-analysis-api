@@ -22,6 +22,10 @@ class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = (
         f"mysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
     )
+    REDIS_HOST = '127.0.0.1'
+    REDIS_PORT = 6379
+    REDIS_DB = 0
+    REDIS_PASSWORD = 'thndr'
 
 
 EXPORT_CONFIGS: List[Type[BaseConfig]] = [

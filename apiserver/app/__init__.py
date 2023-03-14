@@ -1,9 +1,11 @@
 from flask import Flask, jsonify, g
 from flask_restx import Api
 from flask_sqlalchemy import SQLAlchemy
+from flask_redis import Redis
 import json
 
 db = SQLAlchemy()
+redis = Redis()
 
 
 def create_app(env=None):
@@ -17,6 +19,7 @@ def create_app(env=None):
 
     register_routes(api, app)
     db.init_app(app)
+    redis.init_app(app)
 
 
     @app.route("/health")
