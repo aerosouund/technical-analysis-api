@@ -19,7 +19,7 @@ class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     TESTING = False
     SQLALCHEMY_DATABASE_URI = (
-        f"mysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:3306/{DB_NAME}"
+        f"mysql://{DB_USER}:{DB_PASS}@{DB_HOST}:3306/{DB_NAME}"
     )
     REDIS_HOST = os.environ['REDIS_HOST']
     REDIS_PASSWORD = os.environ['REDIS_PASSWORD']
