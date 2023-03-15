@@ -4,16 +4,23 @@ from db.models import get_stock_model
 from sqlalchemy import Column, Integer, String, DateTime, MetaData, Table
 from sqlalchemy.inspection import inspect
 import logging
+import os
+
+DB_USER=os.environ['DB_USER']
+DB_PASS=os.environ['DB_PASS']
+DB_HOST=os.environ['DB_HOST']
+DB_NAME=os.environ['DB_NAME']
+
 
 def connect():
-    engine = create_engine('mysql://admin:thndr@127.0.0.1:3306/stocks')
+    engine = create_engine(f'mysql://{DB_USER}:{DB_PASS}@{DB_HOST}:3306/{DB_NAME}')
     Session = sessionmaker(bind=engine)
     session = Session()
     return session
 
 
 def create_stock_table(name):
-    engine = create_engine('mysql://admin:thndr@127.0.0.1:3306/stocks')
+    engine = create_engine(f'mysql://{DB_USER}:{DB_PASS}@{DB_HOST}:3306/{DB_NAME}')
 
     if not inspect(engine).has_table('stock_{}'.format(name).replace(' ', '_')):  # If table don't exist, Create.
         meta = MetaData()
