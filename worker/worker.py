@@ -1,6 +1,7 @@
 import paho.mqtt.client as mqtt
 from db.client import connect, commit_message
 import json
+import os
 
 
 def on_connect(client, userdata, flags, rc):
@@ -18,7 +19,7 @@ def main():
     client.on_connect = on_connect
     client.on_message = on_message
 
-    client.connect("localhost", 1883, 60)
+    client.connect(os.environ['VERNEMQ_HOST'], 1883, 60)
     client.loop_forever()
 
 
