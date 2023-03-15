@@ -13,14 +13,14 @@ DB_NAME=os.environ['DB_NAME']
 
 
 def connect():
-    engine = create_engine(f'mysql://{DB_USER}:{DB_PASS}@{DB_HOST}:3306/{DB_NAME}')
+    engine = create_engine(f"mysql://{DB_USER}:{DB_PASS}@{DB_HOST}:3306/{DB_NAME}")
     Session = sessionmaker(bind=engine)
     session = Session()
     return session
 
 
 def create_stock_table(name):
-    engine = create_engine(f'mysql://{DB_USER}:{DB_PASS}@{DB_HOST}:3306/{DB_NAME}')
+    engine = create_engine(f"mysql://{DB_USER}:{DB_PASS}@{DB_HOST}:3306/{DB_NAME}")
 
     if not inspect(engine).has_table('stock_{}'.format(name).replace(' ', '_')):  # If table don't exist, Create.
         meta = MetaData()

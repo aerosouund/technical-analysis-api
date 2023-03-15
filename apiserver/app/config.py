@@ -1,11 +1,10 @@
 import os
 from typing import List, Type
 
-DB_USERNAME = 'admin'
-DB_PASSWORD = 'thndr'
-DB_HOST = '127.0.0.1'
-DB_PORT = '3306'
-DB_NAME = 'stocks'
+DB_USER=os.environ['DB_USER']
+DB_PASS=os.environ['DB_PASS']
+DB_HOST=os.environ['DB_HOST']
+DB_NAME=os.environ['DB_NAME']
 
 class BaseConfig:
     CONFIG_NAME = "base"
@@ -20,12 +19,13 @@ class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     TESTING = False
     SQLALCHEMY_DATABASE_URI = (
-        f"mysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+        f"mysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:3306/{DB_NAME}"
     )
-    REDIS_HOST = '127.0.0.1'
+    REDIS_HOST = os.environ['REDIS_HOST']
+    REDIS_PASSWORD = os.environ['REDIS_PASSWORD']
     REDIS_PORT = 6379
     REDIS_DB = 0
-    REDIS_PASSWORD = 'thndr'
+    
 
 
 EXPORT_CONFIGS: List[Type[BaseConfig]] = [
