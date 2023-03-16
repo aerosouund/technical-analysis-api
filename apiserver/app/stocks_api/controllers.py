@@ -24,8 +24,11 @@ class StockResource(Resource):
             return {"message": "Stock not found"}, 404
 
         # retrieve technical analysis from Redis and turn it into JSON
-        technical_analysis = json.loads(AnalysisService.get_analysis(stock_name).decode('UTF-8'))
-        stock['technical_analysis'] = technical_analysis  # remove the timestamp key
+        try: 
+            technical_analysis = json.loads(AnalysisService.get_analysis(stock_name).decode('UTF-8'))
+            stock['technical_analysis'] = technical_analysis  # remove the timestamp key
+        except AttributeError: # handle the case of no analysis posted for that stock
+            pass
         stock.pop('timestamp', None)
         return stock
 
