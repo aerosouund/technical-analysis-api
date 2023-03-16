@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vernemq
+spec:
+  ports:
+    - protocol: TCP
+      port: 1883
+      targetPort: 1883
+  selector:
+    app: vernemq
