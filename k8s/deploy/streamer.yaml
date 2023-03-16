@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: streamer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: streamer
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: streamer
+    spec:
+      containers:
+        - name: streamer
+          image: thndr/streamer:0.2
+          ports:
+            - containerPort: 1883
+              protocol: TCP
+          env:
+            - name: MQTT_HOST
+              value: vernemq
+            - name: MQTT_PORT
+              value: '1883'
+            - name: MQTT_TOPIC
+              value: thndr-trading
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
