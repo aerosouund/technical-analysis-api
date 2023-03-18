@@ -46,7 +46,7 @@ class AnalysisService:
     @staticmethod
     def post_analysis(stock_name, analysis):
         '''Post analysis to Redis'''
-        redis.mset({stock_name: analysis})
+        redis.mset({stock_name.replace(' ', '_'): analysis})
 
     @staticmethod
     def get_analysis(stock_name):
