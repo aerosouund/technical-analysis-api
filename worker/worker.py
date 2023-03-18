@@ -1,15 +1,17 @@
 import paho.mqtt.client as mqtt
 from db.client import connect, commit_message
+import logging
 import json
 import os
 
 
 def on_connect(client, userdata, flags, rc):
-    print("Connected with result code " + str(rc))
+    logging.basicConfig(format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+    logging.info("Connected with result code " + str(rc))
     client.subscribe("thndr-trading")
 
 def on_message(client, userdata, msg):
-    print(msg.topic + " " + str(msg.payload))
+    logging.info(msg.topic + " " + str(msg.payload))
     message = json.loads(msg.payload)
     commit_message(message)
 
