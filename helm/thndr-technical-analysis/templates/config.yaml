@@ -7,9 +7,9 @@ data:
   DB_NAME: {{ .Values.data.DB_NAME }}
   DB_PASS: {{ .Values.data.DB_PASS }}
   DB_USER: {{ .Values.data.DB_USER }}
-  REDIS_DB: {{ .Values.data.REDIS_DB }}
+  REDIS_DB: {{ .Values.data.REDIS_DB | quote }}
   REDIS_HOST: {{ .Values.data.REDIS_HOST }}
   REDIS_PASSWORD: {{ .Values.data.REDIS_PASSWORD }}
-  REDIS_PORT: {{ .Values.data.REDIS_PORT }}
+  REDIS_PORT: {{ .Values.data.REDIS_PORT | quote }}
   VERNEMQ_HOST: {{ .Values.data.VERNEMQ_HOST }}
 binaryData: {}

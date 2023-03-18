@@ -81,10 +81,10 @@ data:
   DB_NAME: stocks
   DB_PASS: thndr
   DB_USER: root
-  REDIS_DB: '0'
+  REDIS_DB: "0"
   REDIS_HOST: redis-master
   REDIS_PASSWORD: thndr
-  REDIS_PORT: '6379'
+  REDIS_PORT: "6379"
   VERNEMQ_HOST: vernemq
 
 nodeSelector: {}
