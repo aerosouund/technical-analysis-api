@@ -1,2 +1,7 @@
 auth:
   rootPassword: thndr
+
+initdbScripts:
+  my_init_script.sh: |
+    #!/bin/sh
+    mysql -P 3306 -uroot -pthndr -e "create database stocks";
