@@ -66,7 +66,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "thndr-technical-analysis.fullname" . }}-worker
+  name: worker
   labels:
     {{- include "thndr-technical-analysis.labels" . | nindent 4 }}-worker
 spec:
@@ -75,7 +75,7 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "thndr-technical-analysis.selectorLabels" . | nindent 6 }}-worker
+      app.kubernetes.io/name: thndr-technical-analysis-worker
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -83,7 +83,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "thndr-technical-analysis.selectorLabels" . | nindent 8 }}-worker
+        app.kubernetes.io/name: thndr-technical-analysis-worker
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -93,11 +93,11 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}-worker
+        - name: worker
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.worker-image.repository }}:{{ .Values.worker-image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.worker-image.pullPolicy }}
+          image: "{{ .Values.workerImage.repository }}:{{ .Values.workerImage.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.workerImage.pullPolicy }}
           envFrom:
             - configMapRef:
                 name: {{ include "thndr-technical-analysis.fullname" . }}-env
