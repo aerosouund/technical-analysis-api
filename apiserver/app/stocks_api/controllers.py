@@ -36,11 +36,14 @@ class StockResource(Resource):
 @api.param("stock_name", "Unique ID for a given stock")
 class AnalysisResource(Resource):
     def post(self, stock_name):
+        analysis = request.json
+        if sorted(list(analysis.keys())) != sorted(['target', 'type']):
+            return {"message": "Invalid payload"}, 404
+            
         stock=StockService.retrieve(stock_name)
         if stock is None:
             return {"message": "Stock not found"}, 404
 
-        analysis = request.json
         # Compute target hit with a comparison with the current price
         analysis['target_hit'] = analysis["target"] >= stock["price"] and analysis["type"] == "UP" or analysis["target"] < stock["price"] and analysis["type"] == "DOWN"
 
