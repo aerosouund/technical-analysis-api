@@ -1,3 +1,4 @@
+#!/bin/bash
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo add my-repo https://charts.bitnami.com/bitnami
 
