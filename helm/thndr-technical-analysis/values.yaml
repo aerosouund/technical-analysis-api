@@ -76,6 +76,17 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
+data:
+  DB_HOST: mysql
+  DB_NAME: stocks
+  DB_PASS: thndr
+  DB_USER: root
+  REDIS_DB: '0'
+  REDIS_HOST: redis-master
+  REDIS_PASSWORD: thndr
+  REDIS_PORT: '6379'
+  VERNEMQ_HOST: vernemq
+
 nodeSelector: {}
 
 tolerations: []
