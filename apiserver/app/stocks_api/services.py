@@ -8,9 +8,6 @@ from app.stocks_api.models import get_stock_model
 from sqlalchemy import desc
 
 
-logging.basicConfig(level=logging.WARNING)
-logger = logging.getLogger("stocks-api")
-
 
 class StockService:
     @staticmethod
@@ -23,6 +20,7 @@ class StockService:
             stock = db.session.query(model).order_by(
             desc(model.timestamp)).limit(1).one()
         except exc.SQLAlchemyError:
+            app.logger.error('Unable to retrieve stock from database')
             return None
         return stock._asdict()
 

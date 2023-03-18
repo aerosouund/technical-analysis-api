@@ -28,7 +28,7 @@ class StockResource(Resource):
             technical_analysis = json.loads(AnalysisService.get_analysis(stock_name).decode('UTF-8'))
             stock['technical_analysis'] = technical_analysis  # remove the timestamp key
         except AttributeError: # handle the case of no analysis posted for that stock
-            pass
+            app.logger.error('Unable to retrieve stock from redis, no analysis')
         stock.pop('timestamp', None)
         return stock
 
