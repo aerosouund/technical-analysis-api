@@ -12,7 +12,7 @@ image:
 
 imagePullSecrets: []
 nameOverride: "thndr-apiserver"
-fullnameOverride: "thndr-apiserver-chart"
+fullnameOverride: "thndr-apiserver"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -38,6 +38,7 @@ securityContext: {}
 
 service:
   type: NodePort
+  targetPort: 5000
   port: 5000
 
 ingress:
