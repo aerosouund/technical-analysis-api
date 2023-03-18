@@ -2,7 +2,7 @@ import logging
 from datetime import datetime, timedelta
 from sqlalchemy import inspect
 from sqlalchemy import exc
-
+import app
 from app import db, redis
 from app.stocks_api.models import get_stock_model
 from sqlalchemy import desc
