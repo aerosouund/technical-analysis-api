@@ -16,7 +16,7 @@ def create_app(env=None):
     app = Flask(__name__)
     app.config.from_object(config_by_name[env or "test"])
     api = Api(app, title="Stocks API", version="0.1.0")
-    app.logging.basicConfig(format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+    logging.basicConfig(format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
 
     register_routes(api, app)
     db.init_app(app)
