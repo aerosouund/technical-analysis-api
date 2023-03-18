@@ -20,7 +20,6 @@ class StockService:
             stock = db.session.query(model).order_by(
             desc(model.timestamp)).limit(1).one()
         except exc.SQLAlchemyError:
-            app.logger.error('Unable to retrieve stock from database')
             return None
         return stock._asdict()
 
