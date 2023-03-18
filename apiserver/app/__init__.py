@@ -2,6 +2,7 @@ from flask import Flask, jsonify, g
 from flask_restx import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_redis import Redis
+import logging
 import json
 
 db = SQLAlchemy()
