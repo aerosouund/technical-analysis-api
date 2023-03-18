@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from db.models import get_stock_model
-from sqlalchemy import Column, Integer, String, DateTime, MetaData, Table
+from sqlalchemy import Column, Integer, String, DateTime, MetaData, Table, exc
 from sqlalchemy.inspection import inspect
 import logging
 import os
@@ -10,6 +10,7 @@ DB_USER=os.environ['DB_USER']
 DB_PASS=os.environ['DB_PASS']
 DB_HOST=os.environ['DB_HOST']
 DB_NAME=os.environ['DB_NAME']
+
 
 
 def connect():
@@ -49,8 +50,11 @@ def commit_message(message):
     # create a StockName object and insert it into the database
     create_stock_table(name)
     stock_data = get_stock_model(name.replace(' ', '_'))(stock_id=stock_id, name=name, price=price, availability=availability, timestamp=timestamp)
-    session.add(stock_data)
-    session.commit()
+    try: 
+        session.add(stock_data)
+        session.commit()
+    except exc.SQLAlchemyError:
+        print('error occured during committing message')
 
     # close the session
     session.close()

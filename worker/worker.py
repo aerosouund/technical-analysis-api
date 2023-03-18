@@ -6,17 +6,17 @@ import os
 
 
 def on_connect(client, userdata, flags, rc):
-    logging.basicConfig(format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
-    logging.info("Connected with result code " + str(rc))
+    print("Connected with result code " + str(rc))
     client.subscribe("thndr-trading")
 
 def on_message(client, userdata, msg):
-    logging.info(msg.topic + " " + str(msg.payload))
+    logging.warning(str(msg.payload))
     message = json.loads(msg.payload)
     commit_message(message)
 
 
 def main(): 
+    logging.basicConfig(format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
     client = mqtt.Client()
     client.on_connect = on_connect
     client.on_message = on_message
