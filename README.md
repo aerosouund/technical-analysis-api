@@ -17,7 +17,7 @@ the stock prices. The analysis for a given stock is persisted on Redis for later
 
 - make sure helm is installed
 - make sure your kubeconfig points to your local minikube cluster
-- create the VerneMQ deployment
+- create the VerneMQ deployment & service
 - run `deploy.sh` :fire:
 
 ### Technologies used
